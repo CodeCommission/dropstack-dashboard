@@ -17,6 +17,7 @@ const LoginInput = styled.input`
   width: 140px;
   margin: 5px;
   padding: 5px;
+  border-radius: 0px;
   border: 1px solid white;
   background-color: #422c46;
 `
