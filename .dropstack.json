@@ -1,0 +1,9 @@
+{
+  "variables": "",
+  "instances": 1,
+  "alias": "dashboard.cloud.dropstack.run",
+  "type": "npm",
+  "excludes": [],
+  "name": "eplgyuqo",
+  "serviceUrl": "eplgyuqo.cloud.dropstack.run"
+}
