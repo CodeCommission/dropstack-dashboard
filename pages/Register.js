@@ -81,8 +81,8 @@ export default class Register extends React.Component {
             <RegisterInput type="password" name="password" placeholder="password" />
             <RegisterInput type="password" name="vpassword" placeholder="password" />
             <br/>
-            <RegisterButton type="submit">Register</RegisterButton>
-            <RegisterLoginLink href="/login">login</RegisterLoginLink>
+            <RegisterButton type="submit">sign up</RegisterButton>
+            <RegisterLoginLink href="/login">log in</RegisterLoginLink>
           </form>
         }
         {

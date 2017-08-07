@@ -81,7 +81,7 @@ export default class Login extends React.Component {
           <LoginInput type="text" name="username" placeholder="email" />
           <LoginInput type="password" name="password" placeholder="password" />
           <br />
-          <LoginButton type="submit">login</LoginButton>
+          <LoginButton type="submit">log in</LoginButton>
           <LoginRegisterLink href="/register">sign up</LoginRegisterLink>
         </form>
         {
