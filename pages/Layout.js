@@ -24,6 +24,7 @@ const TopNavigationLogin = styled.div`
   display: inline-block;
   font-size: 11px;
   float: right;
+  margin-top: -4px;
 `
 
 const TopNavigationContainer = styled.div`
@@ -115,10 +116,9 @@ export default class Layout extends React.Component {
             <TopNavigation>
               <a href="/"><TopNavigationImage src="/dropstack.svg" /></a>
               <TopNavigationList>
-                <TopNavigationListItem><NavigationLink href={'/'}>/dashboard</NavigationLink></TopNavigationListItem>
-                <TopNavigationListItem><NavigationLink href={'/about'}>/about</NavigationLink></TopNavigationListItem>
-                <TopNavigationListItem><NavigationLink href={'/logout'}>/logout</NavigationLink></TopNavigationListItem>
-                <TopNavigationListItem fullSize><TopNavigationLogin>{this.props.userId}</TopNavigationLogin></TopNavigationListItem>
+                <TopNavigationListItem><NavigationLink href={'/'}>dashboard</NavigationLink></TopNavigationListItem>
+                <TopNavigationListItem><NavigationLink href={'/account'}>account</NavigationLink></TopNavigationListItem>
+                <TopNavigationListItem fullSize><TopNavigationLogin><NavigationLink href={'/logout'}>{this.props.userId}<br/>logout</NavigationLink></TopNavigationLogin></TopNavigationListItem>
               </TopNavigationList>
             </TopNavigation>
           </TopNavigationContainer>

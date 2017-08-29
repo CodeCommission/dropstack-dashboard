@@ -6,6 +6,11 @@ const IndexContainer = styled.div`
   height: 100vh;
   margin-left: 11px;
   margin-right: 11px;
+  font-size: 12px;
+`
+
+const TableHead = styled.th`
+  text-align: left;
 `
 
 export default class Index extends React.Component {
@@ -19,11 +24,30 @@ export default class Index extends React.Component {
   render() {
     return (
       <IndexContainer>
-        <h1># services</h1>
-        {
-          this.props.services &&
-          this.props.services.map(x => <div key={x.serviceName}>{x.serviceInstances} - {x.serviceType} - {x.serviceName} - {x.serviceUrl} - {x.serviceAlias}</div>)
-        }
+        <h2># services</h2>
+        <table>
+          <thead>
+            <tr>
+              <TableHead>NUM #</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Domain</TableHead>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            this.props.services &&
+            this.props.services.map(x =>
+              <tr key={x.serviceName}>
+                <td>{x.serviceInstances}</td>
+                <td>{x.serviceType.toUpperCase()}</td>
+                <td><a href={`https://${x.serviceUrl}`} target="_blank">{x.serviceName}</a></td>
+                <td><a href={`https://${x.serviceAlias}`} target="_blank">{x.serviceAlias}</a></td>
+              </tr>
+            )
+          }
+          </tbody>
+        </table>
       </IndexContainer>
     )
   }
