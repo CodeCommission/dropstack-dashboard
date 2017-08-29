@@ -1,13 +1,13 @@
 {
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.1",
   "name": "dropstack-dashboard",
   "description": "My dropstack-dashboard React-Universal-App",
   "engines": {
     "node": "^6"
   },
   "dependencies": {
-    "jsonwebtoken": "^7.4.2",
+    "jsonwebtoken": "^7.4.3",
     "reunify": "latest"
   },
   "scripts": {

@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const IndexContainer = styled.div`
-  background-color: white;
-  margin-top: 50px;
-  padding: 10px;
   width: 100vw;
   height: 100vh;
+  margin-left: 11px;
+  margin-right: 11px;
 `
 
 export default class Index extends React.Component {
@@ -20,13 +19,11 @@ export default class Index extends React.Component {
   render() {
     return (
       <IndexContainer>
-        <div>
-          <h1># services</h1>
-          {
-            this.props.services &&
-            this.props.services.map(x => <div key={x.serviceName}>{x.serviceInstances} - {x.serviceType} - {x.serviceName} - {x.serviceUrl} - {x.serviceAlias}</div>)
-          }
-        </div>
+        <h1># services</h1>
+        {
+          this.props.services &&
+          this.props.services.map(x => <div key={x.serviceName}>{x.serviceInstances} - {x.serviceType} - {x.serviceName} - {x.serviceUrl} - {x.serviceAlias}</div>)
+        }
       </IndexContainer>
     )
   }

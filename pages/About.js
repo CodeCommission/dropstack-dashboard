@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const AboutContainer = styled.div`
-  background-color: white;
-  margin-top: 50px;
-  padding: 10px;
   width: 100vw;
   height: 100vh;
+  margin-left: 11px;
+  margin-right: 11px;
 `
 
 const AboutHeadline = styled.h1`
