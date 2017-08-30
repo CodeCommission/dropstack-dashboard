@@ -10,9 +10,9 @@ const AccountContainer = styled.div`
 `
 
 export default class Account extends React.Component {
-  static async getInitialProps (req, res) {
+  static async getInitialProps (req, res, ctx) {
     const token = req.universalCookies.get('token')
-    return fetch(`https://api.cloud.dropstack.run/auth/account`, {headers: {Authorization: `Bearer ${token}`}})
+    return fetch(`${ctx.env.APIURL}/auth/account`, {headers: {Authorization: `Bearer ${token}`}})
     .then(response => response.json())
     .then(data => ({account: data, token}))
   }

@@ -41,6 +41,7 @@ const LoginButton = styled.button`
   border: 1px solid white;
   border-radius: 0px;
   background-color: #422c46;
+  cursor: pointer;
 `
 
 const LoginErrorMessage = styled.div`
@@ -68,11 +69,11 @@ const LoginRegisterLink = styled.a`
 `
 
 export default class Login extends React.Component {
-  static async getInitialProps (req, res) {
+  static async getInitialProps (req, res, ctx) {
     if(!(req.body.username && req.body.password)) return
 
     const basicAuth = Buffer.from(`${req.body.username}:${req.body.password}`).toString('base64')
-    return fetch(`https://api.cloud.dropstack.run/auth/login`, {method:'POST', headers: {Authorization: `Basic ${basicAuth}`}})
+    return fetch(`${ctx.env.APIURL}/auth/login`, {method:'POST', headers: {Authorization: `Basic ${basicAuth}`}})
     .then(response => {
       if(response.status !== 200) return Promise.reject(new Error('login failed retry please'))
       return response.json()

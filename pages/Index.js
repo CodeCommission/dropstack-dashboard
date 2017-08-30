@@ -14,9 +14,9 @@ const TableHead = styled.th`
 `
 
 export default class Index extends React.Component {
-  static async getInitialProps (req, res) {
+  static async getInitialProps (req, res, ctx) {
     const token = req.universalCookies.get('token')
-    return fetch(`https://api.cloud.dropstack.run/deploys`, {headers: {Authorization: `Bearer ${token}`}})
+    return fetch(`${ctx.env.APIURL}/deploys`, {headers: {Authorization: `Bearer ${token}`}})
     .then(response => response.json())
     .then(data => ({services: data}))
   }
