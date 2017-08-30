@@ -117,6 +117,7 @@ export default class Layout extends React.Component {
               <a href="/"><TopNavigationImage src="/dropstack.svg" /></a>
               <TopNavigationList>
                 <TopNavigationListItem><NavigationLink href={'/'}>dashboard</NavigationLink></TopNavigationListItem>
+                <TopNavigationListItem><NavigationLink href={'/services'}>services</NavigationLink></TopNavigationListItem>
                 <TopNavigationListItem><NavigationLink href={'/account'}>account</NavigationLink></TopNavigationListItem>
                 <TopNavigationListItem fullSize><TopNavigationLogin><NavigationLink href={'/logout'}>{this.props.userId}<br/>logout</NavigationLink></TopNavigationLogin></TopNavigationListItem>
               </TopNavigationList>

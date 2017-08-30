@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import EventSource from 'eventsource'
 
 const IndexContainer = styled.div`
   width: 100vw;
@@ -14,40 +15,38 @@ const TableHead = styled.th`
 `
 
 export default class Index extends React.Component {
+  state = {
+    activities: [],
+  }
+
   static async getInitialProps (req, res, ctx) {
-    const token = req.universalCookies.get('token')
-    return fetch(`${ctx.env.APIURL}/deploys`, {headers: {Authorization: `Bearer ${token}`}})
-    .then(response => response.json())
-    .then(data => ({services: data}))
+    return {
+      token: req.universalCookies.get('token')
+    }
+  }
+
+  componentDidMount () {
+      const es = new EventSource(`${this.props.env.APIURL}/activities/live`, {headers: {Authorization: `Bearer ${this.props.token}`}})
+      es.onmessage = msg => {
+        try {
+          const activity = JSON.parse(msg.data)
+          if(!activity.timestamp) return
+          const activities = this.state.activities.slice(0);
+          activities.unshift(activity)
+          this.setState({activities})
+        } catch(e){}
+      }
   }
 
   render() {
     return (
       <IndexContainer>
-        <h2># services</h2>
-        <table>
-          <thead>
-            <tr>
-              <TableHead>NUM #</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Domain</TableHead>
-            </tr>
-          </thead>
-          <tbody>
-          {
-            this.props.services &&
-            this.props.services.map(x =>
-              <tr key={x.serviceName}>
-                <td>{x.serviceInstances}</td>
-                <td>{x.serviceType.toUpperCase()}</td>
-                <td><a href={`https://${x.serviceUrl}`} target="_blank">{x.serviceName}</a></td>
-                <td><a href={`https://${x.serviceAlias}`} target="_blank">{x.serviceAlias}</a></td>
-              </tr>
-            )
-          }
-          </tbody>
-        </table>
+        <h2># activities</h2>
+        {
+          this.state.activities.length
+          ? this.state.activities.map((x, i) => <div key={i}>{new Date(x.timestamp).toLocaleString()} | {x.id} | {x.topic} | {x.activity} | {x.state}</div>)
+          : 'receiving ...'
+        }
       </IndexContainer>
     )
   }

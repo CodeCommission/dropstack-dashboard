@@ -1,12 +1,13 @@
 {
   "private": true,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "name": "dropstack-dashboard",
   "description": "DropStack Dashboard",
   "engines": {
     "node": "^6"
   },
   "dependencies": {
+    "eventsource": "^1.0.5",
     "jsonwebtoken": "^7.4.3",
     "reunify": "latest"
   },
