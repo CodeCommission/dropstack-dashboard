@@ -1,5 +1,5 @@
 {
-  "variables": "",
+  "variables": "APIURL=https://api.cloud.dropstack.run",
   "instances": 1,
   "alias": "dashboard.cloud.dropstack.run",
   "type": "npm",
