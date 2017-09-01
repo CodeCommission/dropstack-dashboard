@@ -7,16 +7,18 @@
     "node": "^6"
   },
   "dependencies": {
+    "dotenv-cli": "^1.4.0",
     "eventsource": "^1.0.5",
     "jsonwebtoken": "^7.4.3",
-    "reunify": "latest"
+    "reunify": "latest",
+    "stripe": "^4.24.1"
   },
   "scripts": {
     "export": "NODE_ENV=production reunify export",
     "export:dev": "NODE_ENV=production reunify export -d",
     "export:package": "NODE_ENV=production reunify export -p",
     "export:package:dev": "NODE_ENV=production reunify export -p -d",
-    "dev": "PORT=8080 NODE_ENV=development APIURL=https://api.cloud.dropstack.run reunify serve",
+    "dev": "PORT=8080 NODE_ENV=development dotenv -e .env reunify serve",
     "start": "PORT=80 NODE_ENV=production reunify serve --silent"
   }
 }

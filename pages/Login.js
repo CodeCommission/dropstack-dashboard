@@ -51,7 +51,7 @@ const LoginErrorMessage = styled.div`
   font-size: 11px;
 `
 
-const LoginRegisterLink = styled.a`
+const LoginSignupLink = styled.a`
   font-size: 11px;
   color: white;
   width: 153px;
@@ -94,7 +94,7 @@ export default class Login extends React.Component {
             <LoginInput type="password" name="password" placeholder="password" />
             <br />
             <LoginButton type="submit">log in</LoginButton>
-            <LoginRegisterLink href="/register">sign up</LoginRegisterLink>
+            <LoginSignupLink href="/signup">sign up</LoginSignupLink>
           </form>
           {
             this.props.error &&

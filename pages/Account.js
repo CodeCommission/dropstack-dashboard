@@ -11,6 +11,7 @@ const AccountContainer = styled.div`
 
 export default class Account extends React.Component {
   static async getInitialProps (req, res, ctx) {
+    console.log(ctx.env.STRIPE_SECRET_KEY)
     const token = req.universalCookies.get('token')
     return fetch(`${ctx.env.APIURL}/auth/account`, {headers: {Authorization: `Bearer ${token}`}})
     .then(response => response.json())
