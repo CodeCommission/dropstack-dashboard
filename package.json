@@ -1,8 +1,8 @@
 {
   "private": true,
-  "version": "1.0.7",
+  "version": "1.0.9",
   "name": "dropstack-dashboard",
-  "description": "DropStack Dashboard",
+  "description": "DropStack dashboard.",
   "engines": {
     "node": "^6"
   },
@@ -10,6 +10,7 @@
     "dotenv-cli": "^1.4.0",
     "eventsource": "^1.0.5",
     "jsonwebtoken": "^7.4.3",
+    "pouchdb": "^6.3.4",
     "reunify": "latest",
     "stripe": "^4.24.1"
   },
