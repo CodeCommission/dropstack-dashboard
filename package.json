@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "1.0.9",
+  "version": "1.1.0",
   "name": "dropstack-dashboard",
   "description": "DropStack dashboard.",
   "engines": {
@@ -19,7 +19,7 @@
     "export:dev": "NODE_ENV=production reunify export -d",
     "export:package": "NODE_ENV=production reunify export -p",
     "export:package:dev": "NODE_ENV=production reunify export -p -d",
-    "dev": "PORT=8080 NODE_ENV=development dotenv -e .env reunify serve",
-    "start": "PORT=80 NODE_ENV=production reunify serve --silent"
+    "dev": "PORT=8080 NODE_ENV=development dotenv -e .env-dev reunify serve",
+    "start": "PORT=80 NODE_ENV=production dotenv -e .env-prod reunify serve --silent"
   }
 }

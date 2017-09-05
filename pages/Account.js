@@ -33,6 +33,11 @@ const BillingCardButton = styled.button`
   border-radius: 0px;
   background-color: white;
   cursor: pointer;
+  :disabled {
+    color: #dddddd;
+    border: 1px solid #dddddd;
+    cursor: not-allowed;
+  }
 `
 
 const BillingCardErrorMessage = styled.div`
@@ -42,10 +47,20 @@ const BillingCardErrorMessage = styled.div`
   font-size: 11px;
 `
 
+const BillingCardSuccessMessage = styled.div`
+color: green;
+width: 300px;
+padding: 5px;
+font-size: 11px;
+`
+
 export default class Account extends React.Component {
   state = {
-    error: '',
-    token: '',
+    registerCustomerError: '',
+    registerCustomerSuccess: '',
+    chargeError: '',
+    chargeSuccess: '',
+    account: null,
   }
 
   static async getInitialProps (req, res, ctx) {
@@ -55,12 +70,13 @@ export default class Account extends React.Component {
     .then(data => ({account: data, token}))
   }
 
-  addCard () {
-    const cardData = {
+  registerCustomer () {
+    const customerData = {
       number: this.number.value,
       exp_month: this.exp_month.value,
       exp_year: this.exp_year.value,
       cvc: this.cvc.value,
+      name: this.name.value,
     }
 
     /*
@@ -70,20 +86,31 @@ export default class Account extends React.Component {
     123
     */
 
-    fetch('/payment', {credentials: 'include', method: 'POST', body: JSON.stringify(cardData), headers: {'Content-Type': 'application/json'}})
+    fetch('/payment', {credentials: 'include', method: 'POST', body: JSON.stringify(customerData), headers: {'Content-Type': 'application/json'}})
     .then(response => response.json())
     .then(data => {
-      if(data.error) return this.setState({error: data.error})
-      console.log(data)
-      this.setState({
-        error: '',
-        token: data.token,
-      })
+      if(data.error) return this.setState({registerCustomerError: data.error})
+      this.setState({registerCustomerError: '', registerCustomerSuccess: 'Successful registrated', account: data})
     })
-    .catch(err => this.setState({error: err.message}))
+    .catch(err => this.setState({registerCustomerError: err.message, registerCustomerSuccess: ''}))
+  }
+
+  chargeAmount () {
+    const changeData = {amount: this.amount.value}
+
+    fetch('/charge', {credentials: 'include', method: 'POST', body: JSON.stringify(changeData), headers: {'Content-Type': 'application/json'}})
+    .then(response => response.json())
+    .then(data => {
+      if(data.error) return this.setState({chargeError: data.error, chargeSuccess: ''})
+      this.setState({chargeError: '', chargeSuccess: 'Successful charged'})
+    })
+    .catch(err => this.setState({chargeError: err.message, chargeSuccess: ''}))
   }
 
   render() {
+    const account = this.state.account || this.props.account || {}
+    const payment = account.payment || {}
+    const source = ((payment.sources || {}).data || []).find(x => x.id === payment.default_source) || {};
     return (
       <AccountContainer>
         <h2># account</h2>
@@ -93,14 +120,30 @@ export default class Account extends React.Component {
           <div><strong>JSON Web Token&nbsp;:</strong> {this.props.token}</div>
         </div>
         <h2># billing</h2>
-        <BillingCardInput type="text" innerRef={x => this.number = x} placeholder="number" />
-        <BillingCardInput type="text" innerRef={x => this.exp_month = x} placeholder="expiration month" />
-        <BillingCardInput type="text" innerRef={x => this.exp_year = x} placeholder="expiration year" />
-        <BillingCardInput type="text" innerRef={x => this.cvc = x} placeholder="cvc" />
-        <BillingCardButton onClick={() => this.addCard()}>Add Card</BillingCardButton>
+        <BillingCardInput type="text" innerRef={x => this.name = x} placeholder="Name" defaultValue={source.name} />
+        <BillingCardInput type="text" innerRef={x => this.number = x} placeholder="Number" defaultValue={source.last4 ? `XXXX-XXXX-XXXX-${source.last4}` : ''} />
+        <BillingCardInput type="number" innerRef={x => this.exp_month = x} placeholder="Expiration month" defaultValue={source.exp_month} />
+        <BillingCardInput type="number" innerRef={x => this.exp_year = x} placeholder="Expiration year" defaultValue={source.exp_year} />
+        <BillingCardInput type="number" innerRef={x => this.cvc = x} placeholder="CVC" />
+        <BillingCardButton onClick={() => this.registerCustomer()}>Register</BillingCardButton>
         {
-          this.state.error &&
-          <BillingCardErrorMessage>{this.state.error}</BillingCardErrorMessage>
+          this.state.registerCustomerError &&
+          <BillingCardErrorMessage>{this.state.registerCustomerError}</BillingCardErrorMessage>
+        }
+        {
+          this.state.registerCustomerSuccess &&
+          <BillingCardSuccessMessage>{this.state.registerCustomerSuccess}</BillingCardSuccessMessage>
+        }
+        <h2># payment</h2>
+        <BillingCardInput type="number" innerRef={x => this.amount = x} placeholder="Amount in EUR" />
+        <BillingCardButton disabled={!payment.default_source} onClick={() => this.chargeAmount()}>Fair Pay</BillingCardButton>
+        {
+          this.state.chargeError &&
+          <BillingCardErrorMessage>{this.state.chargeError}</BillingCardErrorMessage>
+        }
+        {
+          this.state.chargeSuccess &&
+          <BillingCardSuccessMessage>{this.state.chargeSuccess}</BillingCardSuccessMessage>
         }
       </AccountContainer>
     )
