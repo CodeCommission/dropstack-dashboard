@@ -2,8 +2,9 @@
   "variables": "APIURL=https://api.cloud.dropstack.run",
   "instances": 1,
   "alias": "dashboard.cloud.dropstack.run",
-  "type": "npm",
+  "type": "node8",
   "excludes": [],
+  "stateful": false,
   "name": "eplgyuqo",
   "serviceUrl": "eplgyuqo.cloud.dropstack.run"
 }
